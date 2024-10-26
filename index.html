@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Chemistry Reaction Pathways Quiz</h1>
+
+    <div>
+        <h2>Random Question</h2>
+        <button onclick="generateRandomQuestion()">Get Random Question</button>
+        <div id="randomQuestionContainer"></div>
+        <div id="randomQuestionInput" style="display: none;">
+            <p>Input:</p>
+            <input type="text" placeholder="Reaction Mechanism" style="width: 250px" id="rm">
+            <input type="text" placeholder="Catalyst" style="width: 250px" id="c">
+            <input type="text" placeholder="Reaction Conditions" style="width: 250px" id="rc">
+            <input type="text" placeholder="Reactant" style="width: 250px" id="r">
+        </div>
+        <div id="randomQuestionContainerAnswer" style="display: none;">
+            <p>Answers:</p>
+            <input type="text" placeholder="Reaction Mechanism" style="width: 250px" id="rma" disabled>
+            <input type="text" placeholder="Catalyst" style="width: 250px" id="ca" disabled>
+            <input type="text" placeholder="Reaction Conditions" style="width: 250px" id="rca" disabled>
+            <input type="text" placeholder="Reactant" style="width: 250px" id="ra" disabled>
+        </div>
+        <br>
+        <button onclick="showRandomQuestionAnswer()">Show Answer</button>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Long Pathway</h2>
+        <div id="trackForwardContainer">
+            <div id="startingCompound"></div>
+            <div id="endCompound"></div>
+        </div>
+        <button onclick="forwards()">Start Reaction Path</button>
+        <div id="stepsContainer"></div>
+        <button onclick="revealSteps()">Reveal Steps</button>
+        <div id="resultContainer"></div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
