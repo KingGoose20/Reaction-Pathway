@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angus's Chemistry Reaction Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            margin-top: 50px;
+            background-color: #f0f8ff;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 95vw;
+            padding: 20px;
+            border: 2px solid #007acc;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+
+        h1 {
+            color: #007acc;
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+
+        .answer-input,
+        .button {
+            padding: 10px;
+            font-size: 1em;
+            margin: 10px 0;
+            width: 90%;
+            border-radius: 5px;
+        }
+
+        .button {
+            cursor: pointer;
+            color: #fff;
+            background-color: #007acc;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #005a99;
+        }
+
+        .result {
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+
+        .score {
+            font-size: 1em;
+            color: #555;
+        }
+
+        table {
+            border: 2px solid black;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            /* Ensures borders don’t overlap */
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            /* Adds individual borders to each cell */
+            text-align: left;
+        }
+
+        /* Alternate row coloring */
+        tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+            /* Light gray for odd rows */
+        }
+
+        /* Optional styling for header row */
+        thead tr {
+            background-color: #007acc;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Glossary</h1>
+        <p>Here is a list of all reactions: <i>Explanations Beneath</i></p>
+        <div style="max-width: 90vw; overflow-x: scroll;">
+            <table>
+                <tr>
+                    <td>Original Functional Group 1 *</td>
+                    <td>Type</td>
+                    <td>Functional Group 2</td>
+                    <td>Type *</td>
+                    <td>Reaction Mechanism *</td>
+                    <td>Catalyst</td>
+                    <td>Catalyst Conditions</td>
+                    <td>Reactant</td>
+                    <td>Product *</td>
+                </tr>
+                <tr>
+                    <td>Alkene</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Addition</td>
+                    <td></td>
+                    <td></td>
+                    <td>HX</td>
+                    <td>Haloalkane</td>
+                </tr>
+                <tr>
+                    <td>Alkene</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Addition Polymerisation</td>
+                    <td></td>
+                    <td>Heat, Pressure</td>
+                    <td></td>
+                    <td>Addition Polymer</td>
+                </tr>
+                <tr>
+                    <td>Alkene</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Hydration</td>
+                    <td>H3PO4</td>
+                    <td></td>
+                    <td>H2O Gas</td>
+                    <td>Alcohol</td>
+                </tr>
+                <tr>
+                    <td>Alkene</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Addition</td>
+                    <td></td>
+                    <td></td>
+                    <td>X2</td>
+                    <td>Dihaloalkane</td>
+                </tr>
+                <tr>
+                    <td>Alkene</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Reduction</td>
+                    <td>Nickel, Platinum, Palladium</td>
+                    <td>Heat</td>
+                    <td>H2 gas</td>
+                    <td>Alkane</td>
+                </tr>
+                <tr>
+                    <td>Nitrile</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Reduction</td>
+                    <td>Nickel, Platinum, Palladium</td>
+                    <td></td>
+                    <td>2H2 gas</td>
+                    <td>Amine</td>
+                </tr>
+                <tr>
+                    <td>Alkane</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Substitution</td>
+                    <td></td>
+                    <td>UV Light</td>
+                    <td>X2</td>
+                    <td>Haloalkane</td>
+                </tr>
+                <tr>
+                    <td>Haloalkane</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Substitution</td>
+                    <td></td>
+                    <td>UV Light</td>
+                    <td>X2</td>
+                    <td>Dihaloalkane</td>
+                </tr>
+                <tr>
+                    <td>Haloalkane</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Substitution</td>
+                    <td>Ethanol</td>
+                    <td>Heat</td>
+                    <td>KCN</td>
+                    <td>Nitrile</td>
+                </tr>
+                <tr>
+                    <td>Haloalkane</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Substitution</td>
+                    <td>Ethanol</td>
+                    <td>Sealed Tube, Heat</td>
+                    <td>2NH3 Gas</td>
+                    <td>Amine</td>
+                </tr>
+                <tr>
+                    <td>Haloalkane</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Substitution</td>
+                    <td>Ethanol</td>
+                    <td>RTP</td>
+                    <td>NH3 Gas</td>
+                    <td>Amine</td>
+                </tr>
+                <tr>
+                    <td>Haloalkane</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Substitution</td>
+                    <td></td>
+                    <td>Heat</td>
+                    <td>NaOH</td>
+                    <td>Alcohol</td>
+                </tr>
+                <tr>
+                    <td>Alcohol</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Oxidation</td>
+                    <td></td>
+                    <td>Cold, Dilute, H+</td>
+                    <td>K2Cr2O7</td>
+                    <td>Aldehyde</td>
+                </tr>
+                <tr>
+                    <td>Alcohol</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Oxidation</td>
+                    <td></td>
+                    <td>Hot, Conc, H+</td>
+                    <td>KMnO4, K2Cr2O7</td>
+                    <td>Carboxylic Acid</td>
+                </tr>
+                <tr>
+                    <td>Aldehyde</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Oxidation</td>
+                    <td></td>
+                    <td>Hot, Conc, H+</td>
+                    <td>KMnO4, K2Cr2O7</td>
+                    <td>Carboxylic Acid</td>
+                </tr>
+                <tr>
+                    <td>Alcohol</td>
+                    <td>Secondary</td>
+                    <td></td>
+                    <td></td>
+                    <td>Oxidation</td>
+                    <td></td>
+                    <td>Hot, Conc, H+</td>
+                    <td>KMnO4, K2Cr2O7</td>
+                    <td>Ketone</td>
+                </tr>
+                <tr>
+                    <td>Haloalkane</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Elimination</td>
+                    <td></td>
+                    <td>Alcoholic Conditions</td>
+                    <td>NaOH</td>
+                    <td>Alkene</td>
+                </tr>
+                <tr>
+                    <td>Alcohol</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Dehydration Elimination</td>
+                    <td></td>
+                    <td>Heat</td>
+                    <td>Concentrated H2SO4</td>
+                    <td>Alkene</td>
+                </tr>
+                <tr>
+                    <td>Carboxylic Acid</td>
+                    <td></td>
+                    <td>Alcohol</td>
+                    <td></td>
+                    <td>Esterfication Condensation</td>
+                    <td></td>
+                    <td>Reflux</td>
+                    <td>Concentrated H2SO4</td>
+                    <td>Ester</td>
+                </tr>
+                <tr>
+                    <td>Carboxylic Acid</td>
+                    <td></td>
+                    <td>Amine</td>
+                    <td></td>
+                    <td>Condensation</td>
+                    <td></td>
+                    <td>Heat</td>
+                    <td>Concentrated H2SO4</td>
+                    <td>Amide</td>
+                </tr>
+                <tr>
+                    <td>Ester</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Hydrolysis</td>
+                    <td></td>
+                    <td>H2O/H+</td>
+                    <td>Dilute HCl</td>
+                    <td>Carboxylic Acid, Alcohol</td>
+                </tr>
+                <tr>
+                    <td>Amide</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Hydrolysis</td>
+                    <td></td>
+                    <td>H2O/H+</td>
+                    <td>Dilute HCl</td>
+                    <td>Carboxylic Acid, Amine</td>
+                </tr>
+                <tr>
+                    <td>Nitrile</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Hydrolysis</td>
+                    <td></td>
+                    <td>H2O/H+</td>
+                    <td>Dilute HCl</td>
+                    <td>Carboxylic Acid, NH4Cl</td>
+                </tr>
+                <tr>
+                    <td>Carboxylic Acid</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Hydrolysis</td>
+                    <td></td>
+                    <td>Reflux (OH-/H2O)</td>
+                    <td>NaOH</td>
+                    <td>Sodium Carboxylic Acid, Alcohol</td>
+                </tr>
+                <tr>
+                    <td>Amide</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Hydrolysis</td>
+                    <td></td>
+                    <td>NaOH</td>
+                    <td>OH-/H2O</td>
+                    <td>Sodium Carboxylic Acid, Amine</td>
+                </tr>
+                <tr>
+                    <td>Amine</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Hydrolysis</td>
+                    <td></td>
+                    <td>NaOH</td>
+                    <td>OH-/H2O</td>
+                    <td>Sodium Carboxylic Acid, Ammonia</td>
+                </tr>
+                <tr>
+                    <td>Carboxylic Acid</td>
+                    <td></td>
+                    <td>Amine</td>
+                    <td></td>
+                    <td>Acid-Base Neutralisation</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Alkylammonium Salt</td>
+                </tr>
+                <tr>
+                    <td>Alcohol or Alkane</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Combustion</td>
+                    <td></td>
+                    <td>Heat</td>
+                    <td>O2</td>
+                    <td>CO2 Gas + H2O</td>
+                </tr>
+                <tr>
+                    <td>Carboxylic Acid</td>
+                    <td></td>
+                    <td>Carbonate</td>
+                    <td></td>
+                    <td>Acid-Carbonate</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Salt, CO2, H2O</td>
+                </tr>
+                <tr>
+                    <td>Alkene</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Oxidation</td>
+                    <td></td>
+                    <td></td>
+                    <td>Strong Oxidising Agent</td>
+                    <td>Ketone OR Carboxylic Acid, Nitrile</td>
+                </tr>
+                <tr>
+                    <td>Alkene</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Oxidation</td>
+                    <td></td>
+                    <td></td>
+                    <td>Mild Oxidising Agent</td>
+                    <td>Dialcohol</td>
+                </tr>
+                <tr>
+                    <td>Haloalkane</td>
+                    <td></td>
+                    <td>Amine</td>
+                    <td></td>
+                    <td>Substitution</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Amine + HX</td>
+                </tr>
+                <tr>
+                    <td>Methanol</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Oxidation</td>
+                    <td></td>
+                    <td></td>
+                    <td>Oxidising Agent</td>
+                    <td>CO2 Gas + H2O</td>
+                </tr>
+            </table>
+        </div>
+        <p>Any column with a * means it is a compulsory requirement for ALL reactions. No * means that not every
+            reaction will have something under this column</p>
+        <br><br>
+        <h3>Question Examples:</h3>
+        <p>Q: Which functional group undergoes <b>Addition</b> to become a <b>Alkane</b>?</p>
+        <p>A: Alkene</p>
+        <br>
+        <br>
+        <p>Q: What does a <b>Alkene</b> become under <b>Hydration</b>?</p>
+        <p>A: Alcohol</p>
+        <br>
+        <br>
+        <p>Q: What catalyst is needed for a <b>Alkene</b> to undergo <b>Hydration</b>?</p>
+        <p>A: H3PO4 (Phosphoric Acid)</p>
+        <br>
+        <br>
+        <p>Q: What are the conditions for an <b>Carboxylic Acid</b> to undergo <b>Condensation</b>?</p>
+        <p>A: Alkene</p>
+        <br>
+        <br>
+        <p>Q: What reactant is required for a <b>Alkane</b> to form a <b>Haloalkane</b> through <b>Substitution</b>?</p>
+        <p>A: X2</p>
+        <br>
+        <br>
+        <p>Q: What is the product when <b>Carboxylic Acid</b> and <b>Amine</b> undergo <b>Condensation</b>?</p>
+        <p>A: Amide</p>
+        <br>
+        <br>
+        <p>Q: Write all the details (reaction mechanism, catalyst, conditions, and reactant) for a <b>Haloalkane</b> to become a <b>Amine</b>?</p>
+        <p>A: Substitution, Ethanol, RTP, NH3 Gas</p>
+        <br>
+        <br>
+        <h3>Extra Notes:</h3>
+        <p>Some questions will not appear with anything in the second functional gorup category, so make sure you still
+            know them</p>
+        <p>'X' means any halogen</p>
+        <p>'Catalyst Conditions' is what is required for the reaciton to occur, 'reactant' is what the functional groups
+            are reacting with</p>
+        <br>
+        <br>
+        <br>
+        <h3>Final Note:</h3>
+        <p>This should include every reaction, but the questions don't necessarily ask you about every piece of
+            information. Make sure you still learn all the little details to get that 50/50 :)</p>
+
+    </div>
+    <button class="button" onclick="goBack()" style="width: 20%; margin-top: 50px;">Go Back</button>
+
+</body>
+
+<script>
+    function goBack() {
+        window.open("index.html", "_self"); // Opens in a new tab
+    }
+
+</script>
+
+</html>

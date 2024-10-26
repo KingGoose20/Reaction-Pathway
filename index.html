@@ -4,51 +4,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chemistry Quiz</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Angus's Chemistry Reaction Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+            padding: 20px;
+            border: 2px solid #007acc;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+
+        h1 {
+            color: #007acc;
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+
+        .answer-input,
+        .button {
+            padding: 10px;
+            font-size: 1em;
+            margin: 10px 0;
+            width: 90%;
+            border-radius: 5px;
+        }
+
+        .button {
+            cursor: pointer;
+            color: #fff;
+            background-color: #007acc;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #005a99;
+        }
+
+        .result {
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+
+        .score {
+            font-size: 1em;
+            color: #555;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Chemistry Reaction Pathways Quiz</h1>
-
-    <div>
-        <h2>Random Question</h2>
-        <button onclick="generateRandomQuestion()">Get Random Question</button>
-        <div id="randomQuestionContainer"></div>
-        <div id="randomQuestionInput" style="display: none;">
-            <p>Input:</p>
-            <input type="text" placeholder="Reaction Mechanism" style="width: 250px" id="rm">
-            <input type="text" placeholder="Catalyst" style="width: 250px" id="c">
-            <input type="text" placeholder="Reaction Conditions" style="width: 250px" id="rc">
-            <input type="text" placeholder="Reactant" style="width: 250px" id="r">
-        </div>
-        <div id="randomQuestionContainerAnswer" style="display: none;">
-            <p>Answers:</p>
-            <input type="text" placeholder="Reaction Mechanism" style="width: 250px" id="rma" disabled>
-            <input type="text" placeholder="Catalyst" style="width: 250px" id="ca" disabled>
-            <input type="text" placeholder="Reaction Conditions" style="width: 250px" id="rca" disabled>
-            <input type="text" placeholder="Reactant" style="width: 250px" id="ra" disabled>
-        </div>
-        <br>
-        <button onclick="showRandomQuestionAnswer()">Show Answer</button>
+    <div class="container">
+        <h1>Angus's Reaction Pathways Quiz</h1>
+        <div class="question" id="question"></div>
+        <input type="text" class="answer-input" id="answer" placeholder="Type your answer here...">
+        <button class="button" onclick="checkAnswer()">Check Answer</button>
+        <button class="button" onclick="nextQuestion()">Next Question</button>
+        <div class="result" id="result"></div>
+        <div class="score" id="score">Questions Attempted: 0</div>
     </div>
+    <button class="button" onclick="viewglossary()" style="width: 20%; margin-top: 50px;">View Glossary</button>
 
-    <hr>
+    <script>
+        // Full reaction data with all fields
+        const reactions = [{ "originalA": "Alkene", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Addition", "catalyst": "None", "catalystConditions": "None", "reactant": "HX", "product": "Haloalkane" },
+        { "originalA": "Alkene", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Addition Polymerisation", "catalyst": "None", "catalystConditions": "Heat, Pressure", "reactant": "None", "product": "Addition Polymer" },
+        { "originalA": "Alkene", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Hydration", "catalyst": "H3PO4", "catalystConditions": "None", "reactant": "H2O Gas", "product": "Alcohol" },
+        { "originalA": "Alkene", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Addition", "catalyst": "None", "catalystConditions": "None", "reactant": "X2", "product": "Dihaloalkane" },
+        { "originalA": "Alkene", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Reduction", "catalyst": "Nickel, Platinum, Palladium", "catalystConditions": "Heat", "reactant": "H2 gas", "product": "Alkane" },
+        { "originalA": "Nitrile", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Reduction", "catalyst": "Nickel, Platinum, Palladium", "catalystConditions": "None", "reactant": "2H2 gas", "product": "Amine" },
+        { "originalA": "Alkane", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Substitution", "catalyst": "None", "catalystConditions": "UV Light", "reactant": "X2", "product": "Haloalkane" },
+        { "originalA": "Haloalkane", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Substitution", "catalyst": "None", "catalystConditions": "UV Light", "reactant": "X2", "product": "Dihaloalkane" },
+        { "originalA": "Haloalkane", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Substitution", "catalyst": "Ethanol", "catalystConditions": "Heat", "reactant": "KCN", "product": "Nitrile" },
+        { "originalA": "Haloalkane", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Substitution", "catalyst": "Ethanol", "catalystConditions": "Sealed Tube, Heat", "reactant": "2NH3 Gas", "product": "Amine" },
+        { "originalA": "Haloalkane", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Substitution", "catalyst": "Ethanol", "catalystConditions": "RTP", "reactant": "NH3 Gas", "product": "Amine" },
+        { "originalA": "Haloalkane", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Substitution", "catalyst": "None", "catalystConditions": "Heat", "reactant": "NaOH", "product": "Alcohol" },
+        { "originalA": "Alcohol", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Oxidation", "catalyst": "None", "catalystConditions": "Cold, Dilute, H+", "reactant": "K2Cr2O7", "product": "Aldehyde" },
+        { "originalA": "Alcohol", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Oxidation", "catalyst": "None", "catalystConditions": "Hot, Conc, H+", "reactant": "KMnO4, K2Cr2O7", "product": "Carboxylic Acid" },
+        { "originalA": "Aldehyde", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Oxidation", "catalyst": "None", "catalystConditions": "Hot, Conc, H+", "reactant": "KMnO4, K2Cr2O7", "product": "Carboxylic Acid" },
+        { "originalA": "Alcohol", "typeA": "Secondary", "originalB": "None", "typeB": null, "reactionMechanism": "Oxidation", "catalyst": "None", "catalystConditions": "Hot, Conc, H+", "reactant": "KMnO4, K2Cr2O7", "product": "Ketone" },
+        { "originalA": "Haloalkane", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Elimination", "catalyst": "None", "catalystConditions": "Alcoholic Conditions", "reactant": "NaOH", "product": "Alkene" },
+        { "originalA": "Alcohol", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Dehydration Elimination", "catalyst": "None", "catalystConditions": "Heat", "reactant": "Concentrated H2SO4", "product": "Alkene" },
+        { "originalA": "Carboxylic Acid", "typeA": null, "originalB": "Alcohol", "typeB": null, "reactionMechanism": "Esterfication Condensation", "catalyst": "None", "catalystConditions": "Reflux", "reactant": "Concentrated H2SO4", "product": "Ester" },
+        { "originalA": "Carboxylic Acid", "typeA": null, "originalB": "Amine", "typeB": null, "reactionMechanism": "Condensation", "catalyst": "None", "catalystConditions": "Heat", "reactant": "Concentrated H2SO4", "product": "Amide" },
+        { "originalA": "Ester", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Hydrolysis", "catalyst": "None", "catalystConditions": "H2O/H+", "reactant": "Dilute HCl", "product": "Carboxylic Acid, Alcohol" },
+        { "originalA": "Amide", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Hydrolysis", "catalyst": "None", "catalystConditions": "H2O/H+", "reactant": "Dilute HCl", "product": "Carboxylic Acid, Amine" },
+        { "originalA": "Nitrile", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Hydrolysis", "catalyst": "None", "catalystConditions": "H2O/H+", "reactant": "Dilute HCl", "product": "Carboxylic Acid, NH4Cl" },
+        { "originalA": "Carboxylic Acid", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Hydrolysis", "catalyst": "None", "catalystConditions": "Reflux (OH-/H2O)", "reactant": "NaOH", "product": "Sodium Carboxylic Acid, Alcohol" },
+        { "originalA": "Amide", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Hydrolysis", "catalyst": "None", "catalystConditions": "NaOH", "reactant": "OH-/H2O", "product": "Sodium Carboxylic Acid, Amine" },
+        { "originalA": "Amine", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Hydrolysis", "catalyst": "None", "catalystConditions": "NaOH", "reactant": "OH-/H2O", "product": "Sodium Carboxylic Acid, Ammonia" },
+        { "originalA": "Carboxylic Acid", "typeA": null, "originalB": "Amine", "typeB": null, "reactionMechanism": "Acid-Base Neutralisation", "catalyst": "None", "catalystConditions": "None", "reactant": "None", "product": "Alkylammonium Salt" },
+        { "originalA": "Alcohol or Alkane", "typeA": null, "originalB": "O2", "typeB": null, "reactionMechanism": "Combustion", "catalyst": "None", "catalystConditions": "None", "reactant": "Heat", "product": "CO2 Gas + H2O" },
+        { "originalA": "Carboxylic Acid", "typeA": null, "originalB": "Carbonate", "typeB": null, "reactionMechanism": "Acid-Carbonate", "catalyst": "None", "catalystConditions": "None", "reactant": "None", "product": "Salt, CO2, H2O" },
+        { "originalA": "Alkene", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Oxidation", "catalyst": "None", "catalystConditions": "None", "reactant": "Strong Oxidising Agent", "product": "Ketone OR Carboxylic Acid, Nitrile" },
+        { "originalA": "Alkene", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Oxidation", "catalyst": "None", "catalystConditions": "None", "reactant": "Mild Oxidising Agent", "product": "Dialcohol" },
+        { "originalA": "Haloalkane", "typeA": null, "originalB": "Amine", "typeB": null, "reactionMechanism": "Substitution", "catalyst": "None", "catalystConditions": "None", "reactant": "None", "product": "Amine + HX" },
+        { "originalA": "Methanol", "typeA": null, "originalB": "None", "typeB": null, "reactionMechanism": "Oxidation", "catalyst": "None", "catalystConditions": "None", "reactant": "Oxidising Agent", "product": "CO2 Gas + H2O" }
+        ];
 
-    <div>
-        <h2>Long Pathway</h2>
-        <div id="trackForwardContainer">
-            <div id="startingCompound"></div>
-            <div id="endCompound"></div>
-        </div>
-        <button onclick="forwards()">Start Reaction Path</button>
-        <div id="stepsContainer"></div>
-        <button onclick="revealSteps()">Reveal Steps</button>
-        <div id="resultContainer"></div>
-    </div>
+        let currentQuestion = {};
+        let questionsAttempted = 0;
 
+        // Generate a random question covering all possible fields
+        function generateQuestion() {
+            const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
+            const questionType = Math.floor(Math.random() * 7); // Six types of questions
 
-    <script src="script.js"></script>
+            switch (questionType) {
+                case 0:
+                    currentQuestion = {
+                        question: `Which functional group undergoes <b>${randomReaction.reactionMechanism}</b> to become a <b>${randomReaction.product}</b>?`,
+                        answer: randomReaction.originalA
+                    };
+                    break;
+                case 1:
+                    currentQuestion = {
+                        question: `What does a <b>${randomReaction.originalA}</b> become under <b>${randomReaction.reactionMechanism}</b>?`,
+                        answer: randomReaction.product
+                    };
+                    break;
+                case 2:
+                    currentQuestion = {
+                        question: `What catalyst is needed for a <b>${randomReaction.originalA}</b> to undergo <b>${randomReaction.reactionMechanism}</b>?`,
+                        answer: randomReaction.catalyst || "No catalyst"
+                    };
+                    break;
+                case 3:
+                    currentQuestion = {
+                        question: `What are the conditions for an <b>${randomReaction.originalA}</b> to undergo <b>${randomReaction.reactionMechanism}</b>?`,
+                        answer: randomReaction.catalystConditions || "No specific conditions"
+                    };
+                    break;
+                case 4:
+                    currentQuestion = {
+                        question: `What reactant is required for a <b>${randomReaction.originalA}</b> to form a <b>${randomReaction.product}</b> through <b>${randomReaction.reactionMechanism}</b>?`,
+                        answer: randomReaction.reactant || "No additional reactant"
+                    };
+                    break;
+                case 5:
+                    currentQuestion = {
+                        question: `What is the product when <b>${randomReaction.originalA}</b> and <b>${randomReaction.reactant}</b> as the reactant undergo <b>${randomReaction.reactionMechanism}</b>?`,
+                        answer: randomReaction.product
+                    };
+                    break;
+                case 6:
+                    currentQuestion = {
+                        question: `Write all the details (reaction mechanism, catalyst, conditions, and reactant) for a <b>${randomReaction.originalA}</b> to become a <b>${randomReaction.product}</b>?`,
+                        answer: randomReaction.reactionMechanism + ", " + randomReaction.catalyst + ", " + randomReaction.catalystConditions + ", " + randomReaction.reactant
+                    };
+                    break;
+            }
+
+            document.getElementById("question").innerHTML = currentQuestion.question;
+            document.getElementById("answer").value = "";
+            document.getElementById("result").textContent = "";
+        }
+
+        // Check the user's answer
+        function checkAnswer() {
+            document.getElementById("result").innerHTML = `The answer is: <b>${currentQuestion.answer}</b>`
+            questionsAttempted++;
+            document.getElementById("score").innerHTML = `Questions Attempted: <b>${questionsAttempted}</b>`;
+        }
+
+        // Load the next question
+        function nextQuestion() {
+            generateQuestion();
+        }
+
+        // Initialize first question
+        generateQuestion();
+
+        function viewglossary() {
+            window.open("glossary.html", "_self"); // Opens in a new tab
+        }
+    </script>
 </body>
 
 </html>
